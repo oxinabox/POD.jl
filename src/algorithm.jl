@@ -299,7 +299,7 @@ function MathProgBase.loadproblem!(m::PODNonlinearModel,
     (:Int in m.var_type_orig) && error("POD currently don't support integer variables.")
 
     # Summarize constraints information in original model
-    @compat m.constr_type_orig = Array{Symbol}(m.num_constr_orig)
+    m.constr_type_orig = Array{Symbol}(m.num_constr_orig)
     for i in 1:m.num_constr_orig
         if l_constr[i] > -Inf && u_constr[i] < Inf
             m.constr_type_orig[i] = :(==)
@@ -425,7 +425,7 @@ function presolve(m::PODNonlinearModel)
     m.logs[:total_time] = m.logs[:presolve_time]
     m.logs[:time_left] -= m.logs[:presolve_time]
     (m.loglevel > 0) && println("Presolve ended.")
-    (m.loglevel > 0) && println("Presolve time = $(@compat round.(m.logs[:total_time],2))s")
+    (m.loglevel > 0) && println("Presolve time = $(round.(m.logs[:total_time],2))s")
 
     return
 end
